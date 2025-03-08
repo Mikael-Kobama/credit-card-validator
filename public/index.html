@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Validação de Cartão de Crédito</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Validação de Cartão de Crédito</h1>
+        <form id="form">
+            <label for="cardNumber">Número do Cartão:</label>
+            <input type="text" id="cardNumber" placeholder="Insira o número do cartão" required>
+            <button type="submit">Validar Cartão</button>
+        </form>
+
+        <div id="result" class="result"></div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script>
+        // Função que será chamada quando o formulário for enviado
+        document.getElementById('form').addEventListener('submit', function(event) {
+            event.preventDefault();  // Evita o envio do formulário
+
+            const cardNumber = document.getElementById('cardNumber').value;
+            const resultDiv = document.getElementById('result');
+
+            // Validando o número do cartão com a função do backend
+            axios.post('/validate', { cardNumber })
+                .then(response => {
+                    const { valido, bandeira } = response.data;
+                    resultDiv.innerHTML = `
+                        <h2>Resultado:</h2>
+                        <p>Cartão: ${cardNumber}</p>
+                        <p>Validez: ${valido ? 'Válido' : 'Inválido'}</p>
+                        <p>Bandeira: ${bandeira}</p>
+                    `;
+                })
+                .catch(error => {
+                    console.error('Erro ao validar o cartão', error);
+                    resultDiv.innerHTML = `<p style="color: red;">Erro na validação. Tente novamente.</p>`;
+                });
+        });
+    </script>
+</body>
+</html>
