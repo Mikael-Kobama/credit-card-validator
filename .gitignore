@@ -1,0 +1,16 @@
+# Node.js
+node_modules/
+
+# Ambiente de desenvolvimento
+.DS_Store
+*.log
+
+# Arquivos temporários de editores
+.vscode/
+.idea/
+
+# Arquivos de configuração pessoais
+.env
+
+# Imagens de build ou qualquer outro arquivo não necessário para controle de versão
+*.png
